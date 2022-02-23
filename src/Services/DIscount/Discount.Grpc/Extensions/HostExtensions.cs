@@ -1,12 +1,12 @@
 ﻿using System.Threading;
-using Discount.API.Constants;
+using Discount.Grpc.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 
-namespace Discount.API.Extensions
+namespace Discount.Grpc.Extensions
 {
     public static class HostExtensions
     {
