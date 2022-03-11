@@ -17,7 +17,7 @@ namespace Ordering.Infrastructure
             IConfiguration configuration)
         {
             services.AddDbContext<OrderContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString(ApplicationConstants.OrderingConnectionString)));
+                options.UseSqlServer(configuration.GetConnectionString(ApplicationConstants.OrderingConnectionStringConfiguration)));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IOrderRepository, OrderRepository>();

@@ -1,14 +1,21 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Ordering.Domain.Common;
 using Ordering.Domain.Entities;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Ordering.Infrastructure.Constants;
 
 namespace Ordering.Infrastructure.Persistence
 {
     public class OrderContext : DbContext
     {
+        public OrderContext()
+        {
+            
+        }
+
         public OrderContext(DbContextOptions<OrderContext> options) : base(options)
         {
         }
@@ -33,6 +40,14 @@ namespace Ordering.Infrastructure.Persistence
             }
 
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+{
+                optionsBuilder.UseSqlServer("Server=localhost;Database=OrderDb;User Id=sa;Password=SwN12345678;Encrypt=True;TrustServerCertificate=True");
+            }
         }
     }
 }
