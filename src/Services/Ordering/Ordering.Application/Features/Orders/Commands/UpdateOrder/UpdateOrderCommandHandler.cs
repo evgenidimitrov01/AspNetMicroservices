@@ -16,7 +16,7 @@ namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public UpdateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper, ILogger logger)
+        public UpdateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper, ILogger<UpdateOrderCommandHandler> logger)
         {
             _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -27,7 +27,7 @@ namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
         {
             var orderToUpdate = await _orderRepository.GetByIdAsync(request.Id);
             if (orderToUpdate == null)
-            {
+            {                
                 throw new NotFoundException(nameof(Order), request.Id);
             }
 

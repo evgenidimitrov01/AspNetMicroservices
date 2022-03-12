@@ -5,6 +5,7 @@ using Ordering.Application.Contracts.Infrastructure;
 using Ordering.Application.Contracts.Persistence;
 using Ordering.Application.Models;
 using Ordering.Infrastructure.Constants;
+using Ordering.Infrastructure.Mail;
 using Ordering.Infrastructure.Persistence;
 using Ordering.Infrastructure.Repositories;
 
@@ -23,7 +24,7 @@ namespace Ordering.Infrastructure
             services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.Configure<EmailSettings>(c => configuration.GetSection(ApplicationConstants.EmailSettings));
-            services.AddTransient<IEmailService, IEmailService>();
+            services.AddTransient<IEmailService, EmailService>();
 
             return services;
         }
