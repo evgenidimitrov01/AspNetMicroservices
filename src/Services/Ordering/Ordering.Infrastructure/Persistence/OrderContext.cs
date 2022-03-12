@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Ordering.Domain.Common;
 using Ordering.Domain.Entities;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Ordering.Infrastructure.Constants;
 
 namespace Ordering.Infrastructure.Persistence
 {
@@ -13,7 +11,7 @@ namespace Ordering.Infrastructure.Persistence
     {
         public OrderContext()
         {
-            
+
         }
 
         public OrderContext(DbContextOptions<OrderContext> options) : base(options)
@@ -21,7 +19,7 @@ namespace Ordering.Infrastructure.Persistence
         }
 
         public DbSet<Order> Orders { get; set; }
-        
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in ChangeTracker.Entries<EntityBase>())
@@ -31,10 +29,12 @@ namespace Ordering.Infrastructure.Persistence
                     case EntityState.Added:
                         entry.Entity.CreatedDate = DateTime.Now;
                         entry.Entity.CreatedBy = "swn";
+
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedDate = DateTime.Now;
                         entry.Entity.LastModifiedBy = "swn";
+
                         break;
                 }
             }
@@ -45,8 +45,9 @@ namespace Ordering.Infrastructure.Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-{
-                optionsBuilder.UseSqlServer("Server=localhost;Database=OrderDb;User Id=sa;Password=SwN12345678;Encrypt=True;TrustServerCertificate=True");
+            {
+                optionsBuilder.UseSqlServer(
+                    "Server=localhost;Database=OrderDb;User Id=sa;Password=SwN12345678;Encrypt=True;TrustServerCertificate=True");
             }
         }
     }
